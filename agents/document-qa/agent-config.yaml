@@ -1,0 +1,25 @@
+agent:
+  name: document-qa
+  description: RAG-based document Q&A agent with knowledge base
+  model: anthropic.claude-3-5-sonnet-20241022-v2:0
+  
+knowledge_base:
+  source: s3
+  bucket: "${KNOWLEDGE_BASE_BUCKET}"
+  prefix: "documents/"
+  chunking:
+    strategy: fixed_size
+    max_tokens: 512
+    overlap: 50
+
+guardrails:
+  guardrail_id: "${GUARDRAIL_ID}"
+  
+session:
+  max_tokens: 4096
+  timeout_seconds: 300
+  
+tools:
+  - name: search_documents
+    description: Search the knowledge base for relevant documents
+    type: knowledge_base_retrieval

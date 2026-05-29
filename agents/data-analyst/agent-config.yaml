@@ -1,0 +1,30 @@
+agent:
+  name: data-analyst
+  description: SQL-generating agent with Redshift/Athena access
+  model: anthropic.claude-3-5-sonnet-20241022-v2:0
+
+data_sources:
+  - name: redshift
+    type: redshift
+    connection_secret: "${AGENT_CONFIG_SECRET}"
+    schema: analytics
+  - name: athena
+    type: athena
+    database: data_lake
+    output_location: "s3://${SESSION_LOGS_BUCKET}/athena-results/"
+
+guardrails:
+  guardrail_id: "${GUARDRAIL_ID}"
+
+session:
+  max_tokens: 4096
+  timeout_seconds: 300
+
+tools:
+  - name: execute_query
+    description: Execute a SQL query against the data warehouse
+    type: sql_execution
+    confirmation_required: true
+  - name: describe_table
+    description: Get the schema of a table
+    type: metadata_lookup

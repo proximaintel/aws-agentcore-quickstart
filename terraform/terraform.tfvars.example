@@ -1,0 +1,16 @@
+project_name       = "agentcore"
+environment        = "dev"
+region             = "us-east-1"
+vpc_cidr           = "10.0.0.0/16"
+bedrock_model_id   = "anthropic.claude-3-5-sonnet-20241022-v2:0"
+
+guardrail_content_filters  = true
+guardrail_pii_detection    = true
+session_log_retention_days = 90
+max_tokens_per_session     = 4096
+
+tags = {
+  managed_by  = "terraform"
+  accelerator = "aws-agentcore-quickstart"
+  environment = "dev"
+}
